@@ -8,27 +8,37 @@ CV <- Load_CV(dir_cv)
 
 
 
-x <- CV$V2
+x <- CV[CV$index == 2, ]$V2
 
 find_extreme_points <- function(x, span = 0.05){
 
+  #define epsilon region
+
+
+  #take derivatives
   first_derivative <- vectorized_derivative(x, span)
   second_derivative <- vectorized_derivative(first_derivative, span)
 
+  #extract zero intercept
   zero_first_derivative <- find_zero_crossings(first_derivative)
   zero_second_derivative <- find_zero_crossings(second_derivative)
 
-  peak_value <- second_derivative[zero_first_derivative]
-  valley_value <- second_derivative[zero_first_derivative]
+  #get values of second derivative at zero intercept
+  extreme_point <- second_derivative[zero_first_derivative]
 
-  peak <- match(second_derivative[zero_first_derivative], second_derivative)
-  valley <- which(second_derivative[zero_first_derivative] > 0)
+  peak <- match(extreme_point[extreme_point < 0], second_derivative)
+  valley <- match(extreme_point[extreme_point > 0], second_derivative)
 }
 
+par(mfrow = c(2,1))
 
-plot(CV$V2, cex = 0.1)
+plot(first_derivative, cex = 0.1)
+plot(second_derivative, cex = 0.1)
+plot(x, cex = 0.1)
+
 abline(h = 0)
-abline(v = peak)
+abline(v = peak, col = "red")
+abline(v = valley, col = "blue")
 
 a = second_derivative[zero_first_derivative]
 a[a > 0]

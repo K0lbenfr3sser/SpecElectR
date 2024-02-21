@@ -6,7 +6,7 @@
 #' @return the time difference in seconds between the each element and the earliest time stamp
 #' @export
 #'
-#' @examples
+#' @examples convert_to_seconds_ocean_view(file_list)
 convert_to_seconds_ocean_view = function(file_list){
   spectra_names <- basename(file_list)
   #remove file extension

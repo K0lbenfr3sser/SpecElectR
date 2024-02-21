@@ -5,7 +5,7 @@
 #' @return a vector contining the scan direction
 #' @export ONLY
 #'
-#' @examples
+#' @examples label_monotonicity(x)
 label_monotonicity <- function(vec) {
   diffs <- diff(vec)
   monotonicity <- ifelse((diffs >= 0), "oxidative",

@@ -43,6 +43,7 @@ Load_Spectra = function(dir, starting_row_number = 0, decimal_mark =".", sep = "
   absorbance_values <- lapply(sorted_test, function(y) y$V2)
   #build matrix
   matrix <- do.call(rbind, absorbance_values)
+
   #set Wavelength as colnames
   colnames(matrix) <- as.numeric(unique(sorted_test[[1]][["V1"]]))
   #set Time as rownames

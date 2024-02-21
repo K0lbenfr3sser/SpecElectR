@@ -1,12 +1,12 @@
 #' Take derivative with LOESS smooth before and after
 #'
-#' @param x a vector
-#' @param span argumnet passed to LOESS smoother, the smaller, the less smoothing and the slower.
+#' @param x a vector, time series.
+#' @param span argument passed to LOESS smoother, the smaller, the less smoothing and the slower.
 #'
-#' @return
+#' @return a vector of the smoothed numerical derivative of a time series.
 #' @export ONLY
 #'
-#' @examples
+#' @examples vectorized_derivative(x, span = 0.045)
 vectorized_derivative <- function(x, span = 0.05){
 
   # Smooth the data before taking the derivative using LOESS

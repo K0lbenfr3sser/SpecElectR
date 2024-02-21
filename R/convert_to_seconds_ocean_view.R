@@ -4,7 +4,7 @@
 #' @param file_list a list containing the file names ending in a time stamp with the format hh-mm-ss-mss
 #'
 #' @return the time difference in seconds between the each element and the earliest time stamp
-#' @export ONLY
+#' @export
 #'
 #' @examples
 convert_to_seconds_ocean_view = function(file_list){

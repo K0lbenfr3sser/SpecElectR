@@ -52,6 +52,18 @@ Load_CV = function(dir, starting_row_number = 0, decimal_mark =".", sep = "\t"){
     data <- data |>
       dplyr::group_by(.id) |>
       dplyr::mutate(index = (cumsum(V1 == data[1, "V1"] & cumsum(V1 == data[1, "V1"]) %% 2 == 0)) + 1)
+
+
+    label_monotonicity <- function(vec) {
+      diffs <- diff(vec)
+      monotonicity <- ifelse((diffs >= 0), "oxidative",
+                             ifelse((diffs <= 0), "reductive", NA))
+      monotonicity <- c(monotonicity[1], monotonicity)
+      return(monotonicity)
+    }
+
+    CV$scan <- label_monotonicity(CV$V1)
+
     return(data)
 
   } else {

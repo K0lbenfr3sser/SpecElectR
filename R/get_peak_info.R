@@ -9,28 +9,51 @@
 #' @examples get_peak_info(x)
 get_peak_info <- function(x){
 
-  sparse_mat = x
+  dimension <- dim(x)
+  sparse_mat <- x
   peak_list <- list()
   row_peaks <- list()
   # Iterate over each row of the sparse matrix
   for (i in 1:nrow(sparse_mat)) {
+
     row_values <- sparse_mat[i, ]
 
     # Find peaks (values equal to 1) and their neighboring elements
-    peaks <- as.numeric(names(which(1 == row_values)))
+    #Special case for dim == NULL
+    if (is.null(dimension) == TRUE){
+      peaks <- as.numeric(names(which(1 == row_values)))
+    } else{
+      peaks <- which(1 == row_values)
+    }
 
     for (j in 1:length(peaks)) {
       # Extract neighboring elements
-      peak_index <- which(peaks[j] == names(row_values))
-      lagging_index <- peak_index - 1
-      leading_index <- peak_index + 1
 
-      peak <- peaks[j]
-      start_peak <- as.numeric(names(row_values[lagging_index]))
-      end_peak <- as.numeric(names(row_values[leading_index]))
+      if (is.null(dimension) == TRUE){
 
-      peak_info <- list(peak, start_peak, end_peak)
-      peak_list[[j]] <- peak_info
+        peak_index <- which(peaks[j] == names(row_values))
+
+        lagging_index <- peak_index - 1
+        leading_index <- peak_index + 1
+
+        peak <- peaks[j]
+        start_peak <- as.numeric(names(row_values[lagging_index]))
+        end_peak <- as.numeric(names(row_values[leading_index]))
+
+        peak_info <- list(peak, start_peak, end_peak)
+        peak_list[[j]] <- peak_info
+
+      } else {
+        extrme_list <- row_values[row_values > 0] #fix this to get back names!!!!!!!
+        peak_index <- peaks[j]
+        lagging_index <- peak_index - 1
+        leading_index <- peak_index + 1
+
+        peak_info <- list(peak_index, lagging_index, leading_index)
+        peak_list[[j]] <- peak_info
+
+      }
+
 
     }
 

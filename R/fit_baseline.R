@@ -8,7 +8,7 @@
 #' @examples fit_baseline(x)
 fit_baseline <- function(x){
 
-
+plot(x[1, ])
   peak_info <- list()
   sparse_matrix <- extreme_points_sparse(x)
   peak_info <- get_peak_info(sparse_matrix)

@@ -3,7 +3,7 @@
 #' @param x a data frame with cyclic voltammetry data
 #'
 #' @return a matrix containing the values for each experiment in its rows, per index, per scan.
-#' @export ONLY
+#' @export
 #'
 #' @examples cv_df_to_matrix(x, index == 2, scan == "reductive")
 cv_df_to_matrix <- function(x){

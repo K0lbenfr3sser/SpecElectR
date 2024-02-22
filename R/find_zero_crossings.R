@@ -3,7 +3,7 @@
 #' @param vector a vector wit zero crossings
 #'
 #' @return a vector of indices where zero crossing happens
-#' @export ONLY
+#' @export
 #'
 #' @examples find_zero_crossings(x)
 find_zero_crossings <- function(vector) {

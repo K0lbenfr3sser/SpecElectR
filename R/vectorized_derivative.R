@@ -4,7 +4,7 @@
 #' @param span argument passed to LOESS smoother, the smaller, the less smoothing and the slower.
 #'
 #' @return a vector of the smoothed numerical derivative of a time series.
-#' @export ONLY
+#' @export
 #'
 #' @examples vectorized_derivative(x, span = 0.045)
 vectorized_derivative <- function(x, span = 0.05){

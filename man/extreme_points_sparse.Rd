@@ -4,10 +4,12 @@
 \alias{extreme_points_sparse}
 \title{Finds kind and location of extrema and converts the to a sparse matrix, with measurment number as row indicies and x-values as column indicies.}
 \usage{
-extreme_points_sparse(x)
+extreme_points_sparse(x, span)
 }
 \arguments{
-\item{x}{a matrix, or vectr conatining measurment data row wise.}
+\item{x}{a matrix, or vector containing measurement data row wise.}
+
+\item{span}{argument passed to LOESS smoother, the smaller the less smoothing. Warning values above 0.25 introduce major distortions to the data.}
 }
 \value{
 a sparse matrix containing extrema information.

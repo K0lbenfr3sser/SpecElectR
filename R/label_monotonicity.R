@@ -3,7 +3,7 @@
 #' @param vec a vector containing potential values of a cyclic voltammetry experiment
 #'
 #' @return a vector contining the scan direction
-#' @export ONLY
+#' @export
 #'
 #' @examples label_monotonicity(x)
 label_monotonicity <- function(vec) {

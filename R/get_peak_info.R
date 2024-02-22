@@ -1,17 +1,17 @@
 
 #' get peak information from sparse matrix with peak values
 #'
-#' @param x a sparse matrix containg peak values
+#' @param x a sparse matrix congaing peak values
 #'
-#' @return a nested list of peak inforamtion for each row of x
-#' @export ONLY
+#' @return a nested list of peak information for each row of x
+#' @export
 #'
 #' @examples get_peak_info(x)
 get_peak_info <- function(x){
 
   dimension <- dim(x)
   sparse_mat <- sparse_matrix
-  peak_list <- list()
+  peak_list <- peak_list <- list()
   row_peaks <- list()
   # Iterate over each row of the sparse matrix
   for (i in 1:nrow(sparse_mat)) {
@@ -46,17 +46,36 @@ get_peak_info <- function(x){
         peak_list[[j]] <- peak_info
 
       } else {
-        extrme_list <- row_values[row_values > 0] #fix this to get back names!!!!!!!
-        peak_index <- peaks[j]
-        lagging_index <- peak_index - 1
-        leading_index <- peak_index + 1
+        extreme_list <- which(row_values > 0)
 
-        peak_info <- list(peak_index, lagging_index, leading_index)
-        peak_list[[j]] <- peak_info
+        #get indicies
+        peak_index <- which(extreme_list == peaks[j])
+        lagging_index <- which(extreme_list == peaks[j]) - 1
+        leading_index <- which(extreme_list == peaks[j]) + 1
+
+        #get peak positions
+        peak_pos <- extreme_list[peak_index]
+        base_start <- extreme_list[lagging_index]
+        base_end <- extreme_list[leading_index]
+
+        #check if peak is last or first element
+        if (length(base_start) == 0 || is.na(base_start)) {
+          base_start <- 1
+        }
+
+        if (length(base_end) == 0 || is.na(base_end)) {
+          base_end <- length(row_values)
+
+
+        } else {
+
+          peak_info <- list(peak_pos, base_start, base_end)
+
+          peak_list[[j]] <- peak_info
+        }
+
 
       }
-
-
     }
 
     row_peaks[[i]] <- peak_list

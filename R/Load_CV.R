@@ -54,10 +54,11 @@ Load_CV = function(dir, starting_row_number = 0, decimal_mark =".", sep = "\t"){
       dplyr::mutate(index = (cumsum(V1 == data[1, "V1"] & cumsum(V1 == data[1, "V1"]) %% 2 == 0)) + 1)
     data$scan <- label_monotonicity(data$V1)
 
-    return(data)
-
   } else {
 
   }
+  #create nested matrix
+  nested_matrix <- format_cv_data(data)
 
+  return(nested_matrix)
 }

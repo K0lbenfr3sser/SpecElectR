@@ -10,19 +10,21 @@
 get_peak_info <- function(x){
 
   dimension <- dim(x)
-  sparse_mat <- x
+  sparse_mat <- sparse_matrix
   peak_list <- list()
   row_peaks <- list()
   # Iterate over each row of the sparse matrix
   for (i in 1:nrow(sparse_mat)) {
 
-    row_values <- sparse_mat[i, ]
-
     # Find peaks (values equal to 1) and their neighboring elements
     #Special case for dim == NULL
     if (is.null(dimension) == TRUE){
+
+      row_values <- sparse_mat
       peaks <- as.numeric(names(which(1 == row_values)))
     } else{
+
+      row_values <- sparse_mat[i, ]
       peaks <- which(1 == row_values)
     }
 
@@ -30,7 +32,7 @@ get_peak_info <- function(x){
       # Extract neighboring elements
 
       if (is.null(dimension) == TRUE){
-
+        j = 1
         peak_index <- which(peaks[j] == names(row_values))
 
         lagging_index <- peak_index - 1

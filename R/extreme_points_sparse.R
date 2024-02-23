@@ -16,16 +16,10 @@ extreme_points_sparse <- function(x, span){
   if (is.null(dimension) == TRUE){
     #get peak position row wise
     peak_matrix_sparse <- find_extreme_points(x, span)
-  }
-
-  if (nrow(x) == 1){
-
-    list_of_peaks <- find_extreme_points(x[1, ], span)
-    peak_matrix_sparse <- create_sparse_matrix(x, list_of_peaks)
 
   } else {
     #get peak position row wise
-    list_of_peaks <- apply(x, 1, function(x) find_extreme_points(x))
+    list_of_peaks <- apply(x, 1,  function(x) find_extreme_points(x))
 
     #construct sparse matrix
     peak_matrix_sparse <- create_sparse_matrix(x, list_of_peaks)

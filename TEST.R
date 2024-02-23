@@ -1,4 +1,5 @@
 
+
 dir_uv <- "/home/benny/PHD_DATA/SEC/RGP_014_SEC/"
 dir_cv <- "/home/benny/PHD_DATA/CV/TEST/"
 
@@ -8,25 +9,15 @@ UV_cut <- select_columns_by_range(UV, 230:800)
 
 CV <- Load_CV(dir_cv)
 
-peak_info <- fit_baseline(UV_cut, span = 0.15)
+peak_info <- fit_baseline_peak_wise(UV_cut, span = 0.15)
+
+peak_info_cv <- cyclic_voltammetry_analysis(CV, index = 2, span = 0.05)
 
 x <- CV
 
-cyclic_voltammetry_analysis(x) <- function(x, index = 2){
-
-  #extract single cycle
-  single_cylce <- x[[index]]
-
-  #prepare reductive cycle
-  ox <- single_cylce$oxidative
-  red <- -single_cylce$reductive
-
-  peak_info_ox <- fit_baseline(red, span = 0.05)
-  peak_info_red <- fit_baseline(red, span = 0.05)
 
 
 
-}
 
 library(scales)
 

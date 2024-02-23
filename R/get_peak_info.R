@@ -10,7 +10,7 @@
 get_peak_info <- function(x){
 
   dimension <- dim(x)
-  sparse_mat <- sparse_matrix
+  sparse_mat <- x
   peak_list <- peak_list <- list()
   row_peaks <- list()
   # Iterate over each row of the sparse matrix

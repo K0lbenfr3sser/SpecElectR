@@ -44,15 +44,34 @@ Load_CV = function(dir, starting_row_number = 0, decimal_mark =".", sep = "\t"){
     #convert to data_frame
     data <- data.table::rbindlist(data_list, idcol = TRUE)
     data$.id <- basename(data$.id)
-    data
+
     #remove superficial voltage column
     data <- data[, -4]
 
-    #index segments per group
+    #index scan direction
+
     data <- data |>
       dplyr::group_by(.id) |>
-      dplyr::mutate(index = (cumsum(V1 == data[1, "V1"] & cumsum(V1 == data[1, "V1"]) %% 2 == 0)) + 1)
-    data$scan <- label_monotonicity(data$V1)
+      dplyr::mutate(index = (cumsum(V1 == data[1, "V1"] & cumsum(V1 == data[1, "V1"]) %% 2 == 0)) + 1) |>
+      dplyr::ungroup()
+
+    data = data |>
+      dplyr::group_by(.id) |>
+      dplyr::mutate(scan = label_monotonicity(V1))
+    # Grouped data with dplyr
+    data <- data |>
+      dplyr::group_by(.id) |>
+      dplyr::mutate(
+        sorting_order = case_when(
+          scan == "oxidative" ~ "increasing",
+          scan == "reductive" ~ "decreasing"
+        )
+      ) |>
+      dplyr::arrange(.id, ifelse(sorting_order == "increasing", V1, -V1)) |>
+      dplyr::ungroup() |>
+      dplyr::select(-sorting_order)  # Remove the intermediate variable
+
+
 
   } else {
 

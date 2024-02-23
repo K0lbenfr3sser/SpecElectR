@@ -13,6 +13,7 @@
 #' @examples valleys <- find_extreme_points(data$V2, type = "valley")
 #' @examples saddles <- find_extreme_points(data$V2, type = "saddle")
 #' @examples inflections <- find_extreme_points(data$V2, type = "inflection")
+
 find_extreme_points <- function(x, span = 0.05, epsilon_scale = 500){
 
   #take derivatives
@@ -74,10 +75,9 @@ find_extreme_points <- function(x, span = 0.05, epsilon_scale = 500){
   extrema_matrix <- t(matrix(extrema_df$type))
   colnames(extrema_matrix) <- extrema_df$index
 
-  return(extrema_matrix)
+  #is necessary to coerce single row matricies to correct type
+  extrema_list <- list(extrema_matrix)
 
-
-
-
-
+  return(extrema_list)
 }
+

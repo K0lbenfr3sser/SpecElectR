@@ -11,16 +11,16 @@ create_sparse_matrix <- function(x, nested_list){
   # Determine the number of rows and columns for the sparse matrix
   n_rows <- nrow(x)
   n_cols <- ncol(x)
-nested_list <- sparse_mat
+
   # Initialize lists to store data for sparse matrix construction
   i_list <- j_list <- list()
   x_list <- list()
 
   # Loop through each row of the nested list to populate lists for sparse matrix construction
   for (i in 1:n_rows) {
-    row_indices <- rep(element, length(nested_list[[i]]))
-    col_indices <- as.numeric(colnames(nested_list[[i]]))
-    values <- nested_list[[i]] # Assuming all values are 1
+    row_indices <- rep(i, length(nested_list[[i]][[1]]))
+    col_indices <- as.numeric(colnames(nested_list[[i]][[1]]))
+    values <- nested_list[[i]]
 
     i_list[[i]] <- row_indices
     j_list[[i]] <- col_indices
@@ -34,7 +34,6 @@ nested_list <- sparse_mat
 
   # Create the sparse matrix
   sparse_mat <- Matrix::sparseMatrix(i = i, j = j, x = x, dims = c(n_rows, n_cols))
-  print(sparse_mat)
   return(sparse_mat)
 
 }

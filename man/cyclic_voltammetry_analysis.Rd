@@ -4,7 +4,7 @@
 \alias{cyclic_voltammetry_analysis}
 \title{Performs peak analysis and baseline correction on cyclic voltammetry data}
 \usage{
-cyclic_voltammetry_analysis(x, index = 2)
+cyclic_voltammetry_analysis(x, index = 1, span = 0.05)
 }
 \arguments{
 \item{x}{List of matrices containing cyclic voltammetry data, obtained from Load_CV()}

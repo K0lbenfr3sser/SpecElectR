@@ -62,7 +62,7 @@ Load_CV = function(dir, starting_row_number = 0, decimal_mark =".", sep = "\t"){
     data <- data |>
       dplyr::group_by(.id) |>
       dplyr::mutate(
-        sorting_order = case_when(
+        sorting_order =  dplyr::case_when(
           scan == "oxidative" ~ "increasing",
           scan == "reductive" ~ "decreasing"
         )

@@ -1,24 +1,45 @@
-
-
+# Preliminary Setup -------------------------------------------------------
+#Data directories
 dir_uv <- "/home/benny/PHD_DATA/SEC/RGP_014_SEC/"
 dir_cv <- "/home/benny/PHD_DATA/CV/TEST/"
 
+# UV VIS ------------------------------------------------------------------
+#load UV data.
 UV <- Load_Spectra(dir_uv)
+
+#select ROI of UV data.
 UV_cut <- select_columns_by_range(UV, 230:800)
 
+#Apply LOESS smoothing on cut data.
+UV_cut_smooth <- t(apply(UV_cut, 1, function(x) vectorized_LOESS(x, span = 0.08)))
+colnames(UV_cut_smooth) <- as.numeric(colnames(UV_cut))
 
-CV <- Load_CV(dir_cv)
-
+#Find Peaks in UV Spectra
 peak_info <- fit_baseline_peak_wise(UV_cut, span = 0.15)
 
+
+# CV ----------------------------------------------------------------------
+#Load cyclic voltammetry data
+CV <- Load_CV(dir_cv)
+
+#Apply full peak analysis
 peak_info_cv <- cyclic_voltammetry_analysis(CV, index = 2, span = 0.05)
 
-x <- CV
+#Plot CV Data
+Plot_CV(CV, alpha = 0.45)
+
+
+# Spectro-Electrochemistry ------------------------------------------------
+#compose SEC from UV and CV data.
+SEC <- Build_SEC(y = CV, x = UV_cut_smooth, scan = 2)
+
+#plot reductive SEC
 
 
 
 
 
-library(scales)
+
+
 
 

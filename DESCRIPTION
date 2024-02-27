@@ -1,12 +1,11 @@
 Package: SpecElectR
 Type: Package
-Title: What the Package Does (Title Case)
+Title: A toolbox for hyphenated cyclic voltammetry and UV-Vis spectroscopy analysis.
 Version: 0.1.0
-Author: Who wrote it
-Maintainer: The package maintainer <yourself@somewhere.net>
-Description: More about what it does (maybe more than one line)
-    Use four spaces when indenting paragraphs within the Description.
-License: What license is it under?
+Author: Benjamin Falge <Benjamin.Falge@chemie.uni-regensburg.de>
+Maintainer: Benjamin Falge <Benjamin.Falge@chemie.uni-regensburg.de>
+Description: Usefull functions and scripts to automate CV, UV ans SEC analysis workflows.
+License: use_mit_license()
 Encoding: UTF-8
 LazyData: true
 Imports: 
@@ -14,6 +13,9 @@ Imports:
     dplyr,
     Rcpp (>= 1.0.11),
     rootSolve,
-    stringr
+    stringr,
+    ggplot2,
+    Matrix
 LinkingTo: Rcpp
 RoxygenNote: 7.3.1
+ByteCompile: true

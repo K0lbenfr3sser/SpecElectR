@@ -8,15 +8,15 @@
 #' @return a list of SEC matrices for the oxidative and reductive scan respectively
 #' @export
 #'
-#' @examples Build_SEC(CV, UC, scan = 2)
+#' @examples Build_SEC(CV, UV, scan = 2)
 Build_SEC <- function(y, x, scan = 2){
-y = CV
-x = UV_cut_smooth
-E_red <- as.numeric(colnames(y[[scan]]$reductive))
+
+  E_red <- as.numeric(colnames(y[[scan]]$reductive))
   E_ox <- as.numeric(colnames(y[[scan]]$oxidative))
   scan_dir <- names(y[[scan]])[1]
   E <- c(E_red, E_ox)
-
+  #x = UV
+  #y = CV
   e_small <- downsample(E, length(rownames(x)))
 
   if (scan_dir == "reductive"){
@@ -28,7 +28,12 @@ E_red <- as.numeric(colnames(y[[scan]]$reductive))
   SEC <- list()
 
   SEC[["reductive"]] <- x[1:E_switch, ]
+  rownames(SEC[["reductive"]]) <- downsample(E_red, length(rownames(SEC[["reductive"]])))
+  colnames(SEC[["reductive"]]) <- as.numeric(colnames(x))
+
   SEC[["oxidative"]] <- x[E_switch:length(row.names(x)), ]
+  rownames(SEC[["oxidative"]]) <- downsample(E_ox, length(rownames(SEC[["oxidative"]])))
+  colnames(SEC[["oxidative"]]) <- as.numeric(colnames(x))
 
   return(SEC)
 }

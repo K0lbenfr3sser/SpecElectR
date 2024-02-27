@@ -11,7 +11,8 @@
 #' @examples
 #' dir <- "/path/to/UV/data"
 #' data <- Load_Spectra(dir, starting_row_number = 15, decimal_mark = ".", sep = "\t")
-Load_Spectra = function(dir, starting_row_number = 0, decimal_mark =".", sep = "\t"){
+Load_Spectra = function(dir, starting_row_number = 0, decimal_mark =".",
+                        sep = "\t", threshold = NA){
 
   directory_path <- dir
   starting_row <- starting_row_number
@@ -48,5 +49,17 @@ Load_Spectra = function(dir, starting_row_number = 0, decimal_mark =".", sep = "
   colnames(matrix) <- as.numeric(unique(sorted_test[[1]][["V1"]]))
   #set Time as rownames
   rownames(matrix) <- as.numeric(sorted_indicies)
-  return(matrix)
+
+  #filter if threshold is specified
+  if (is.na(threshold) == FALSE){
+
+    filtered_mat <- matrix[apply(matrix, 1, function(row) !any(row > threshold)), , drop = FALSE]
+
+  } else {
+
+    filtered_mat <- matrix
+
+  }
+
+  return(filtered_mat)
 }

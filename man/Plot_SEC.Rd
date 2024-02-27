@@ -4,12 +4,16 @@
 \alias{Plot_SEC}
 \title{Plot SEC}
 \usage{
-Plot_SEC(SEC, scan_dir)
+Plot_SEC(SEC, CV, scan_dir, scan = 2, font = "Montserrat")
 }
 \arguments{
 \item{SEC}{a list of SEC matricies, obtained from Build_SEC()}
 
+\item{CV}{a list of CV matricies, obtained from Load_CV()}
+
 \item{scan_dir}{wich should be plotted}
+
+\item{scan}{the scan of the CV to be used}
 }
 \value{
 a plot of SEC data

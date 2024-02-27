@@ -17,7 +17,7 @@ fit_baseline_peak_wise <- function(x, span, invert = FALSE){
     x <- x
   }
 
-  #x <- CV[[2]][["reductive"]]
+  #x <- UV
   #initialize empty list.
   peak_info <- list()
 

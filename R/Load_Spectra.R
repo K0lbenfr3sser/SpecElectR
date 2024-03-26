@@ -19,9 +19,9 @@ Load_Spectra = function(dir, starting_row_number = 0, decimal_mark =".",
   # List all files in the directory
   # Change the pattern to match your file type (e.g., "*.csv" for CSV files)
   file_list <- list.files(path = directory_path, pattern = "*.txt", full.names = TRUE)
-  #sort files after aquisition index
+  #sort files after acquisition index
   sorted_file_list <- sort(as.character(file_list))
-  # initialize list to store dataframes
+  # initialize list to store data frames
   test <- list()
   # Loop through each file
   for (file in file_list) {

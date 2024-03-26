@@ -22,7 +22,7 @@ Load_CV = function(dir, starting_row_number = 0, decimal_mark =".", sep = "\t"){
   instrument_model <- "CHI600E"
 
   #logical false for CHI, tru for Autolab
-  instrument <- is.na(grep(instrument_model, lines))
+  instrument <- any(grep(instrument_model, lines))
 
   if (instrument == FALSE){
     #CHI600E
@@ -74,6 +74,39 @@ Load_CV = function(dir, starting_row_number = 0, decimal_mark =".", sep = "\t"){
 
 
   } else {
+    # Function to read each file, skipping lines specified in line_number_data
+    read_file_with_skip <- function(file, skip_lines) {
+      read.table(file, skip = skip_lines, header = TRUE, sep = "\t")
+    }
+
+    # Read each file in file_list, skipping lines according to line_number_data
+    data_list <- Map(read_file_with_skip, file_list, 0)
+
+    #convert to data_frame
+    data <- data.table::rbindlist(data_list, idcol = TRUE)
+    data$.id <- basename(data$.id)
+
+    names(data)[names(data) == 'Potential.applied..V.'] <- 'V1'
+    names(data)[names(data) == 'WE.1..Current..A.'] <- 'V2'
+    names(data)[names(data) == 'Index'] <- 'index'
+
+    data = data |>
+      dplyr::group_by(.id) |>
+      dplyr::mutate(scan = label_monotonicity(V1))
+    # Grouped data with dplyr
+    data <- data |>
+      dplyr::group_by(.id) |>
+      dplyr::mutate(
+        sorting_order =  dplyr::case_when(
+          scan == "oxidative" ~ "increasing",
+          scan == "reductive" ~ "decreasing"
+        )
+      ) |>
+      dplyr::arrange(.id, ifelse(sorting_order == "increasing", V1, -V1)) |>
+      dplyr::ungroup() |>
+      dplyr::select(-sorting_order)  # Remove the intermediate variable
+
+
 
   }
   #create nested matrix

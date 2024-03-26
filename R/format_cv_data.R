@@ -7,6 +7,7 @@
 #'
 #' @examples format_cv_data(x)
 format_cv_data <- function(x){
+  x <- data
   #get unique indices and scans
   indices <- unique(x$index)
   scans <- unique(x$scan)
